@@ -593,54 +593,192 @@ HOME_HTML = """<!doctype html>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PDF → XLSX • IronPlanet</title>
   <style>
-    :root { --bg:#0b0f17; --card:#121a2a; --text:#e9eefc; --muted:#a8b3d6; --border:rgba(255,255,255,.08); --btn:#4f7cff; }
-    html, body { height: 100%; overflow: hidden; }
-    *, *::before, *::after { box-sizing: border-box; }
-    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: radial-gradient(1200px 600px at 20% 10%, #18234a 0%, var(--bg) 55%); color: var(--text); }
-    .hero { position: fixed; top: 22px; left: 0; width: 100%; text-align: center; z-index: 5; }
-    .hero-title { font-weight: 900; letter-spacing: .6px; font-size: clamp(28px, 4vw, 48px); margin: 0; }
-    .hero-sub { margin-top: 10px; font-size: 18px; color: var(--muted); }
-    .wrap { height: 100vh; display:flex; align-items:center; justify-content:center; padding: 28px; padding-top: 170px; }
-    .card { width:min(920px, 100%); background: rgba(18,26,42,.92); border: 1px solid var(--border); border-radius: 18px; padding: 22px; box-shadow: 0 18px 60px rgba(0,0,0,.45); }
-    .top { display:flex; gap:14px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
-    h1 { margin:0; font-size: 28px; }
-    .hint { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
-    .badge { font-size: 12px; color: var(--muted); border: 1px solid var(--border); padding: 6px 10px; border-radius: 999px; }
-    .row { margin-top: 18px; display:flex; gap: 12px; align-items:center; justify-content:center; flex-wrap:wrap; width:100%; }
-    .file { display:flex; align-items:center; justify-content:center; gap:10px; padding: 10px 12px; border: 1px dashed var(--border); border-radius: 14px; background: rgba(255,255,255,.02); }
-    button { padding: 10px 14px; border: 0; border-radius: 14px; cursor: pointer; font-weight: 800; background: var(--btn); color: #0b1020; }
-    button:disabled { opacity: .55; cursor:not-allowed; }
-    .status { margin-top: 14px; font-size: 14px; color: var(--muted); white-space: pre-wrap; text-align:center; }
-    .status.ok { color: #79ffa8; }
-    .status.err { color: #ff7b8a; }
-    .cols { margin-top: 18px; padding: 14px; border-radius: 14px; border:1px solid var(--border); background: rgba(255,255,255,.02); }
-    .cols strong { display:block; margin-bottom: 8px; }
-    .colsgrid { display:grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap:8px; }
-    .pill { text-align:center; padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,.05); font-size:13px; }
-    .corner { position: fixed; right: 12px; bottom: 10px; font-size: 12px; color: var(--muted); opacity: .9; }
-    .footer-note { position: fixed; left: 50%; bottom: 10px; transform: translateX(-50%); font-size: 13px; color: var(--muted); opacity: .9; text-align:center; padding: 0 12px; }
-    @media (max-width: 860px) { .colsgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wrap { padding-top: 150px; } }
+    :root {
+      --bg:#0b0f17;
+      --card:#121a2a;
+      --text:#e9eefc;
+      --muted:#a8b3d6;
+      --border:rgba(255,255,255,.08);
+      --btn:#4f7cff;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 10%, #18234a 0%, var(--bg) 55%);
+      color: var(--text);
+    }
+
+    .hero {
+      position: fixed;
+      top: 24px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      height: 64px;
+      width: auto;
+      max-width: min(320px, calc(100vw - 40px));
+      opacity: .98;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,.25));
+    }
+
+    .wrap {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      padding-top: 150px;
+    }
+
+    .card {
+      width: min(920px, 100%);
+      background: rgba(18,26,42,.92);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 24px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.45);
+      text-align: center;
+    }
+
+    .top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    h1 {
+      margin: 0;
+      width: 100%;
+      text-align: center;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    .row {
+      margin-top: 22px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .file {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,.02);
+    }
+
+    button {
+      padding: 10px 16px;
+      border: 0;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 800;
+      background: var(--btn);
+      color: #0b1020;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .status {
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--muted);
+      white-space: pre-wrap;
+      text-align: center;
+    }
+
+    .status.ok {
+      color: #79ffa8;
+    }
+
+    .status.err {
+      color: #ff7b8a;
+    }
+
+    .corner {
+      position: fixed;
+      right: 12px;
+      bottom: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      opacity: .9;
+    }
+
+    .footer-note {
+      position: fixed;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      font-size: 13px;
+      color: var(--muted);
+      opacity: .9;
+      text-align: center;
+      padding: 0 12px;
+    }
+
+    @media (max-width: 700px) {
+      .wrap {
+        padding-top: 130px;
+      }
+
+      .hero-logo {
+        height: 52px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="hero">
-    <div class="hero-title">ПЛАНЕТА ЖЕЛЕЗЯКА</div>
-    <div class="hero-sub">PDF → XLSX</div>
+    <img class="hero-logo" src="/static/logo.svg" alt="Логотип" />
   </div>
 
   <div class="wrap">
     <div class="card">
       <div class="top">
-        <div>
-          <h1>Конвертация спецификации PDF в XLSX</h1>
-         
-        
+        <h1>Конвертация спецификации PDF в XLSX</h1>
+      </div>
+
       <div class="row">
-        <div class="file"><input id="pdf" type="file" accept="application/pdf,.pdf" /></div>
+        <div class="file">
+          <input id="pdf" type="file" accept="application/pdf,.pdf" />
+        </div>
         <button id="btn" disabled>Скачать XLSX</button>
       </div>
 
-    
       <div id="status" class="status"></div>
     </div>
   </div>
