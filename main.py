@@ -633,7 +633,7 @@ HOME_HTML = """<!doctype html>
       <div class="top">
         <div>
           <h1>Конвертация спецификации PDF в XLSX</h1>
-          <div class="hint">На выходе формируется файл XLSX с кастомными наименованиями и kodtov.</div>
+         
         </div>
         <div class="badge">XLSX • 6 столбцов</div>
       </div>
@@ -643,18 +643,7 @@ HOME_HTML = """<!doctype html>
         <button id="btn" disabled>Скачать XLSX</button>
       </div>
 
-      <div class="cols">
-        <strong>Столбцы на выходе:</strong>
-        <div class="colsgrid">
-          <div class="pill">Артикул</div>
-          <div class="pill">Наименование</div>
-          <div class="pill">kodtov</div>
-          <div class="pill">kolvo</div>
-          <div class="pill">CenaR</div>
-          <div class="pill">Сумма</div>
-        </div>
-      </div>
-
+    
       <div id="status" class="status"></div>
     </div>
   </div>
