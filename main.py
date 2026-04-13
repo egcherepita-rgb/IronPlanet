@@ -624,7 +624,7 @@ HOME_HTML = """<!doctype html>
 </head>
 <body>
   <div class="hero">
-    <div class="hero-title">IRONPLANET</div>
+    <div class="hero-title">ПЛАНЕТА ЖЕЛЕЗЯКА</div>
     <div class="hero-sub">PDF → XLSX</div>
   </div>
 
@@ -634,10 +634,7 @@ HOME_HTML = """<!doctype html>
         <div>
           <h1>Конвертация спецификации PDF в XLSX</h1>
          
-        </div>
-        <div class="badge">XLSX • 6 столбцов</div>
-      </div>
-
+        
       <div class="row">
         <div class="file"><input id="pdf" type="file" accept="application/pdf,.pdf" /></div>
         <button id="btn" disabled>Скачать XLSX</button>
